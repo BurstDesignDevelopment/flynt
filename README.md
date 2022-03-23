@@ -5,44 +5,89 @@
 [![Code Quality](https://img.shields.io/scrutinizer/g/flyntwp/flynt.svg)](https://scrutinizer-ci.com/g/flyntwp/flynt/?branch=master)
 
 ## Short Description
+
 [Flynt](https://flyntwp.com/) is a WordPress theme for component-based development using [Timber](#page-templates) and [Advanced Custom Fields](#advanced-custom-fields).
 
 ## Table of Contents
-* [Install](#install)
-  * [Dependencies](#dependencies)
-* [Usage](#usage)
-  * [Assets](#assets)
-  * [Lib & Inc](#lib--inc)
-  * [Page Templates](#page-templates)
-  * [Components](#components)
-  * [Advanced Custom Fields](#advanced-custom-fields)
-  * [Field Groups](#field-groups)
-  * [ACF Option Pages](#acf-option-pages)
-  * [Timber Dynamic Resize](#timber-dynamic-resize--webp-generation)
-* [Maintainers](#maintainers)
-* [Contributing](#contributing)
-* [License](#license)
+
+- [Install](#install)
+  - [Dependencies](#dependencies)
+- [Usage](#usage)
+  - [Assets](#assets)
+  - [Lib & Inc](#lib--inc)
+  - [Page Templates](#page-templates)
+  - [Components](#components)
+  - [Advanced Custom Fields](#advanced-custom-fields)
+  - [Field Groups](#field-groups)
+  - [ACF Option Pages](#acf-option-pages)
+  - [Timber Dynamic Resize](#timber-dynamic-resize--webp-generation)
+- [Maintainers](#maintainers)
+- [Contributing](#contributing)
+- [License](#license)
 
 ## Install
-1. Clone this repo to `<your-project>/wp-content/themes`.
-2. Change the host variable in `flynt/build-config.js` to match your host URL: `const host = 'your-project.test'`
-3. Navigate to the theme folder and run the following command in your terminal:
-```
-# wp-content/themes/flynt
-composer install
-npm i
-npm run build
-```
-4. Open the WordPress back-end and activate the Flynt theme.
-5. Run `npm run start` and start developing. Your local server is available at `localhost:3000`.
 
 ### Dependencies
-* [WordPress](https://wordpress.org/) >= 5.0
-* [Node](https://nodejs.org/en/) = 12
-* [Composer](https://getcomposer.org/download/) >= 1.8
-* [Advanced Custom Fields Pro](https://www.advancedcustomfields.com/pro/) >= 5.7
+
+- [WP CLI](https://wp-cli.org/)
+- [Valet](https://laravel.com/docs/9.x/valet)
+- [WordPress](https://wordpress.org/) >= 5.0
+- [Node](https://nodejs.org/en/) = 12
+- [Composer](https://getcomposer.org/download/) >= 1.8
+- [Advanced Custom Fields Pro](https://www.advancedcustomfields.com/pro/) >= 5.7
+
+### Create Website Directory
+
+`mkdir MHC && cd MHC`
+
+### Secure dev domain with Valet
+
+`valet secure`
+
+### Create MySQL database
+
+#### Login to MySQL with your details
+
+`mysql -u root`
+
+#### Create DB
+
+`create database MHC`
+
+#### Exit
+
+`exit`
+
+### Download and install wp core to directory
+
+`wp core download && wp config create --dbname="MHC" --dbuser="root" &&wp core install --url="https://MHC.test/" --title="MHC" --admin_user="adm1n" --admin_password="NyP3jjQNdp5z#8wt" --admin_email="web@burstdesign.uk"`
+
+### Install plugins
+
+`wp plugin install duplicator formidable wordpress-seo classic-editor classic-widgets svg-support advanced-custom-fields https://github.com/wp-sync-db/wp-sync-db/archive/refs/heads/master.zip https://github.com/wp-sync-db/wp-sync-db-media-files/archive/refs/heads/master.zip ~/MyDocuments/Work/plugins/advanced-custom-fields-pro.zip --activate`
+
+### Fork and install standard theme
+
+`cd wp-content/themes/ && git clone https://github.com/BurstDesignDevelopment/flynt MHC && cd MHC && composer install && wp theme activate MHC`
+
+### Install Node modules and build
+
+`npm i && npm run build`
+
+### Reinitialize GIT
+
+`rm -rf .github && git init && git add . && git commit --m "Initial Commit"`
+
+### Open theme with visual studio code
+
+`code .`
+
+### Set host variable
+
+Change the host variable in `build-config.js` to match your host URL: `const host = 'your-project.test'`
 
 ## Usage
+
 In your terminal, navigate to `<your-project>/wp-content/themes/flynt` and run `npm start`. This will start a local server at `localhost:3000`.
 
 All files in `assets` and `Components` will now be watched for changes and compiled to the `dist` folder. Happy coding!
@@ -59,7 +104,7 @@ The `admin.scss` file is compiled to `./dist/assets/admin.css` which is enqueued
 
 ### Lib & Inc
 
-The `./lib` folder includes helper functions and basic setup logic. *You will most likely not need to modify any files inside `./lib`.* All files in the `./lib` folder are autoloaded via PSR-4.
+The `./lib` folder includes helper functions and basic setup logic. _You will most likely not need to modify any files inside `./lib`._ All files in the `./lib` folder are autoloaded via PSR-4.
 
 The `./inc` folder is a more organised version of WordPress' `functions.php` and contains all custom theme logic. All files in the `./inc` folder are automatically required.
 
@@ -72,14 +117,17 @@ For organisation, `./inc` has three subfolders. We recommend using these three f
 After the files from `./lib` and `./inc` are loaded, all [components](#components) from the `./Components` folder are loaded.
 
 ### Page Templates
+
 Flynt uses [Timber](https://www.upstatement.com/timber/) to structure its page templates and [Twig](https://twig.symfony.com/) for rendering them. [Timber's documentation](https://timber.github.io/docs/) is extensive and up to date, so be sure to get familiar with it.
 
 There is one Twig function added in Flynt to render components into templates:
-* `renderComponent(componentName, data)` renders a single component. [For example, in the `index.twig` template](https://github.com/flyntwp/flynt/tree/master/templates/index.twig).
+
+- `renderComponent(componentName, data)` renders a single component. [For example, in the `index.twig` template](https://github.com/flyntwp/flynt/tree/master/templates/index.twig).
 
 Besides the main document structure (in `./templates/_document.twig`), everything else is a component.
 
 ### Components
+
 A component is a self-contained building-block. Each component contains its own layout, its ACF fields, PHP logic, scripts, and styles.
 
 ```
@@ -97,6 +145,7 @@ The `functions.php` file for every component in the `./Components` folder is exe
 To render components into a template, see [Page Templates](#page-templates).
 
 ### Advanced Custom Fields
+
 Defining Advanced Custom Fields (ACF) can be done in `functions.php` for each component. As a best practise, we recommend defining your fields inside a function named `getACFLayout()` which you can then call in a [field group](#field-groups).
 
 For example:
@@ -124,6 +173,7 @@ function getACFLayout()
 ```
 
 ### Field Groups
+
 Field groups are needed to show registered fields in the WordPress back-end. All field groups are created in the `./inc/fieldGroups` folder. Two field groups exist by default: [`pageComponents.php`](https://github.com/flyntwp/flynt/tree/master/inc/fieldGroups/pageComponents.php) and [`postComponents.php`](https://github.com/flyntwp/flynt/tree/master/inc/fieldGroups/postComponents.php).
 
 We call the function `getACFLayout()` defined in the `functions.php` file of each component to load fields into a field group.
@@ -171,12 +221,13 @@ add_action('Flynt/afterRegisterComponents', function () {
 Here we use the [ACF Field Group Composer](https://github.com/flyntwp/acf-field-group-composer) plugin, which provides the advantage that all fields automatically get a unique key.
 
 ### ACF Option Pages
+
 Flynt includes several utility functions for creating Advanced Custom Fields options pages. Briefly, these are:
 
-* `Flynt\Utils\Options::addTranslatable`<br> Adds fields into a new group inside the Translatable Options options page. When used with the WPML plugin, these fields will be returned in the current language.
-* `Flynt\Utils\Options::addGlobal`<br> Adds fields into a new group inside the Global Options options page. When used with WPML, these fields will always be returned from the primary language. In this way these fields are *global* and cannot be translated.
-* `Flynt\Utils\Options::getTranslatable` <br> Retrieve a translatable option.
-* `Flynt\Utils\Options::getGlobal` <br> Retrieve a global option.
+- `Flynt\Utils\Options::addTranslatable`<br> Adds fields into a new group inside the Translatable Options options page. When used with the WPML plugin, these fields will be returned in the current language.
+- `Flynt\Utils\Options::addGlobal`<br> Adds fields into a new group inside the Global Options options page. When used with WPML, these fields will always be returned from the primary language. In this way these fields are _global_ and cannot be translated.
+- `Flynt\Utils\Options::getTranslatable` <br> Retrieve a translatable option.
+- `Flynt\Utils\Options::getGlobal` <br> Retrieve a global option.
 
 ### Timber Dynamic Resize & WebP Generation
 
@@ -188,10 +239,13 @@ Resized images are stored in `uploads/resized`. To regenerate all image sizes an
 
 To enable Dynamic Resize and WebP Support, go to **Global Options -> Timber Dynamic Resize**.
 ​
+
 #### Troubleshooting
+
 ​
 If `resizedDynamic` is enabled and image requests result in 404 errors, try the following solutions:
 ​
+
 1. If you're using nginx and the server (not WordPress) responds with a 404 error, check your server configuration against [the recommended standard](https://wordpress.org/support/article/nginx/#general-wordpress-rules). If the standard configuration cannot be used, resolve the image requests correctly by adding the following rule to your configuration:
 
 ```nginx
@@ -235,16 +289,20 @@ add_filter('Flynt/TimberDynamicResize/relativeUploadDir', function () {
 If browsersync is not working and you are not serving WordPress on https, try changing the `browsersync.https` value to `false` in the file `build-config.js`.
 
 ## Maintainers
+
 This project is maintained by [bleech](https://github.com/bleech).
 
 The main people in charge of this repo are:
-* [Steffen Bewersdorff](https://github.com/steffenbew)
-* [Dominik Tränklein](https://github.com/domtra)
+
+- [Steffen Bewersdorff](https://github.com/steffenbew)
+- [Dominik Tränklein](https://github.com/domtra)
 
 ## Contributing
+
 To contribute, please use GitHub [issues](https://github.com/flyntwp/flynt/issues). Pull requests are accepted. Please also take a moment to read the [Contributing Guidelines](https://github.com/flyntwp/guidelines/blob/master/CONTRIBUTING.md) and [Code of Conduct](https://github.com/flyntwp/guidelines/blob/master/CODE_OF_CONDUCT.md).
 
 If editing the README, please conform to the [standard-readme](https://github.com/RichardLitt/standard-readme) specification.
 
 ## License
+
 MIT © [bleech](https://www.bleech.de)
