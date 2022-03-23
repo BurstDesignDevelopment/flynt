@@ -38,7 +38,7 @@
 
 ### Create Website Directory
 
-`mkdir MHC && cd MHC`
+`mkdir <your-project> && cd <your-project>`
 
 ### Secure dev domain with Valet
 
@@ -52,7 +52,7 @@
 
 #### Create DB
 
-`create database MHC`
+`create database <your-db-name>`
 
 #### Exit
 
@@ -60,15 +60,15 @@
 
 ### Download and install wp core to directory
 
-`wp core download && wp config create --dbname="MHC" --dbuser="root" &&wp core install --url="https://MHC.test/" --title="MHC" --admin_user="adm1n" --admin_password="NyP3jjQNdp5z#8wt" --admin_email="web@burstdesign.uk"`
+`wp core download && wp config create --dbname="<your-db-name>" --dbuser="<your-db-user>" && wp core install --url="<your-project-domain>" --title="<website-title>" --admin_user="<your-username>" --admin_password="<your-password>" --admin_email="<your-email>"`
 
 ### Install plugins
 
-`wp plugin install duplicator formidable wordpress-seo classic-editor classic-widgets svg-support advanced-custom-fields https://github.com/wp-sync-db/wp-sync-db/archive/refs/heads/master.zip https://github.com/wp-sync-db/wp-sync-db-media-files/archive/refs/heads/master.zip ~/MyDocuments/Work/plugins/advanced-custom-fields-pro.zip --activate`
+`wp plugin install duplicator formidable wordpress-seo classic-editor classic-widgets svg-support advanced-custom-fields https://github.com/wp-sync-db/wp-sync-db/archive/refs/heads/master.zip https://github.com/wp-sync-db/wp-sync-db-media-files/archive/refs/heads/master.zip <path-to-acf-pro> --activate`
 
 ### Fork and install standard theme
 
-`cd wp-content/themes/ && git clone https://github.com/BurstDesignDevelopment/flynt MHC && cd MHC && composer install && wp theme activate MHC`
+`cd wp-content/themes/ && git clone https://github.com/BurstDesignDevelopment/flynt <your-theme-name> && cd <your-theme-name> && composer install && wp theme activate <your-theme-name>`
 
 ### Install Node modules and build
 
@@ -84,11 +84,11 @@
 
 ### Set host variable
 
-Change the host variable in `build-config.js` to match your host URL: `const host = 'your-project.test'`
+Change the host variable in `build-config.js` to match your host URL: `const host = '<your-project-domain>'`
 
 ## Usage
 
-In your terminal, navigate to `<your-project>/wp-content/themes/flynt` and run `npm start`. This will start a local server at `localhost:3000`.
+In your terminal, navigate to `<your-project>/wp-content/themes/<your-theme-name>` and run `npm start`. This will start a local server at `localhost:3000`.
 
 All files in `assets` and `Components` will now be watched for changes and compiled to the `dist` folder. Happy coding!
 
